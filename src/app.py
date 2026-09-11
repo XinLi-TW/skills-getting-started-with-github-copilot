@@ -51,6 +51,18 @@ activities = {
         "max_participants": 20,
         "participants": []
     },
+    "Soccer Team": {
+        "description": "Practice soccer skills and compete in school matches",
+        "schedule": "Tuesdays and Thursdays, 4:00 PM - 5:30 PM",
+        "max_participants": 22,
+        "participants": []
+    },
+    "Basketball Team": {
+        "description": "Develop basketball skills and play competitive games",
+        "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM",
+        "max_participants": 15,
+        "participants": []
+    },
     "Art Club": {
         "description": "Explore drawing, painting, and other visual art techniques",
         "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
