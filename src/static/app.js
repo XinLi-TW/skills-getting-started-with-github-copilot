@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const activity = removeButton.dataset.activity;
     const email = removeButton.dataset.email;
+    removeButton.disabled = true;
 
     try {
       const response = await fetch(

@@ -115,6 +115,11 @@ section h3 {
   color: #c62828;
 }
 
+.remove-participant:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+
 .participants-list .no-participants {
   color: #777;
   font-style: italic;
