@@ -39,6 +39,18 @@ activities = {
         "max_participants": 30,
         "participants": ["john@mergington.edu", "olivia@mergington.edu"]
     },
+    "Soccer Club": {
+        "description": "Practice soccer skills and compete in team matches",
+        "schedule": "Tuesdays and Thursdays, 3:30 PM - 5:00 PM",
+        "max_participants": 24,
+        "participants": []
+    },
+    "Basketball Club": {
+        "description": "Develop basketball skills and play competitive games",
+        "schedule": "Mondays and Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 20,
+        "participants": []
+    },
     "Soccer Team": {
         "description": "Practice soccer skills and compete in school matches",
         "schedule": "Tuesdays and Thursdays, 4:00 PM - 5:30 PM",
@@ -54,25 +66,25 @@ activities = {
     "Art Club": {
         "description": "Explore drawing, painting, and other visual art techniques",
         "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
-        "max_participants": 18,
+        "max_participants": 15,
         "participants": []
     },
     "Drama Club": {
-        "description": "Act, write, and produce plays for the school community",
-        "schedule": "Thursdays, 3:30 PM - 5:30 PM",
+        "description": "Practice acting and produce performances for the school community",
+        "schedule": "Thursdays, 3:30 PM - 5:00 PM",
         "max_participants": 20,
         "participants": []
     },
     "Debate Club": {
-        "description": "Build argumentation skills and discuss important topics",
+        "description": "Build research, reasoning, and public speaking skills",
         "schedule": "Tuesdays, 3:30 PM - 5:00 PM",
-        "max_participants": 16,
+        "max_participants": 18,
         "participants": []
     },
     "Science Club": {
-        "description": "Conduct experiments and investigate the world around us",
+        "description": "Explore scientific ideas through experiments and discussions",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
-        "max_participants": 18,
+        "max_participants": 20,
         "participants": []
     }
 }
@@ -105,3 +117,17 @@ def signup_for_activity(activity_name: str, email: str):
     # Add student
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
+
+
+@app.delete("/activities/{activity_name}/participants/{email}")
+def unregister_from_activity(activity_name: str, email: str):
+    """Remove a student from an activity"""
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
+
+    activity = activities[activity_name]
+    if email not in activity["participants"]:
+        raise HTTPException(status_code=404, detail="Participant not found")
+
+    activity["participants"].remove(email)
+    return {"message": f"Unregistered {email} from {activity_name}"}
