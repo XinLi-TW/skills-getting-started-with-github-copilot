@@ -64,6 +64,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  activitiesList.addEventListener("click", async (event) => {
+    const removeButton = event.target.closest(".remove-participant");
+    if (!removeButton) {
+      return;
+    }
+
+    const activity = removeButton.dataset.activity;
+    const email = removeButton.dataset.email;
+
+    try {
+      const response = await fetch(
+        `/activities/${encodeURIComponent(activity)}/participants/${encodeURIComponent(email)}`,
+        { method: "DELETE" }
+      );
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.detail || "Failed to unregister participant");
+      }
+
+      await fetchActivities();
+    } catch (error) {
+      console.error("Error unregistering participant:", error);
+    }
+  });
+
   // Handle form submission
   signupForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -78,33 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
         }
       );
-
-
-    activitiesList.addEventListener("click", async (event) => {
-      const removeButton = event.target.closest(".remove-participant");
-      if (!removeButton) {
-        return;
-      }
-
-      const activity = removeButton.dataset.activity;
-      const email = removeButton.dataset.email;
-
-      try {
-        const response = await fetch(
-          `/activities/${encodeURIComponent(activity)}/participants/${encodeURIComponent(email)}`,
-          { method: "DELETE" }
-        );
-        const result = await response.json();
-
-        if (!response.ok) {
-          throw new Error(result.detail || "Failed to unregister participant");
-        }
-
-        await fetchActivities();
-      } catch (error) {
-        console.error("Error unregistering participant:", error);
-      }
-    });
       const result = await response.json();
 
       if (response.ok) {
